@@ -1,0 +1,10 @@
+{
+  "name": "cerita-rakyat-nusantara",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "install:frontend": "npm --prefix frontend install",
+    "build": "npm --prefix frontend run build && node scripts/assemble.mjs",
+    "serve": "php -S localhost:8000 -t public_html"
+  }
+}

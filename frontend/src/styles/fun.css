@@ -1,0 +1,106 @@
+/* Lapisan tampilan ceria: warna-warni, gerak halus, ramah untuk semua usia. Dimuat paling akhir agar menimpa gaya dasar. */
+:root {
+  --fun-coral: #F26A4B; --fun-sun: #FFC13B; --fun-mint: #2BB594; --fun-sky: #3AA7E8; --fun-berry: #D9487E; --fun-grape: #7A5CD1;
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+body { background-image: radial-gradient(circle at 12px 12px, rgba(242,106,75,.07) 2px, transparent 2.5px), radial-gradient(circle at 36px 30px, rgba(43,181,148,.07) 2px, transparent 2.5px), radial-gradient(circle at 60px 54px, rgba(255,193,59,.1) 2.5px, transparent 3px); background-size: 72px 72px; }
+
+/* ---------- Hero: gelembung warna + bintang berkilau ---------- */
+.hero-fx { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.hero-fx .blob { position: absolute; border-radius: 50%; filter: blur(46px); opacity: .55; animation: blob-drift 14s ease-in-out infinite alternate; }
+.hero-fx .b1 { width: 340px; height: 340px; left: -90px; top: 40px; background: var(--fun-coral); }
+.hero-fx .b2 { width: 300px; height: 300px; right: 6%; top: -60px; background: var(--fun-berry); animation-duration: 17s; }
+.hero-fx .b3 { width: 280px; height: 280px; right: -60px; bottom: 40px; background: var(--fun-sky); opacity: .42; animation-duration: 19s; }
+@keyframes blob-drift { to { transform: translate(40px, 30px) scale(1.12); } }
+.hero-fx .spark { position: absolute; width: 22px; height: 22px; background: linear-gradient(135deg, #FFF3C4, var(--fun-sun)); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: twinkle 3.2s ease-in-out infinite; filter: drop-shadow(0 0 6px rgba(255,214,102,.9)); }
+.hero-fx .s1 { left: 8%; top: 18%; } .hero-fx .s2 { left: 44%; top: 9%; width: 14px; height: 14px; animation-delay: .8s; }
+.hero-fx .s3 { right: 9%; top: 16%; width: 28px; height: 28px; animation-delay: 1.4s; } .hero-fx .s4 { right: 4%; bottom: 26%; width: 16px; height: 16px; animation-delay: .4s; }
+.hero-fx .s5 { left: 3%; bottom: 22%; width: 18px; height: 18px; animation-delay: 2s; } .hero-fx .s6 { left: 50%; bottom: 14%; width: 12px; height: 12px; animation-delay: 1.1s; }
+@keyframes twinkle { 0%, 100% { transform: scale(.55) rotate(0); opacity: .55; } 50% { transform: scale(1.15) rotate(45deg); opacity: 1; } }
+.hero .chip-light { animation: wobble 4.5s ease-in-out infinite; }
+@keyframes wobble { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg) translateY(-2px); } }
+.hero h1 { text-shadow: 0 4px 0 rgba(61,10,20,.35), 0 12px 30px rgba(0,0,0,.25); }
+.hero h1::after { width: 120px; height: 6px; background: linear-gradient(90deg, var(--fun-sun), var(--fun-coral), var(--fun-berry), transparent); }
+.hero-stats dd { background: linear-gradient(180deg, #FFF1BF, var(--fun-sun)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-book-stage { animation: book-bob 6s ease-in-out infinite; }
+@keyframes book-bob { 0%, 100% { transform: translateY(0) rotate(-.6deg); } 50% { transform: translateY(-8px) rotate(.6deg); } }
+
+/* ---------- Tombol hidup ---------- */
+.btn { transition: transform .25s var(--spring), box-shadow .2s, background .15s, color .15s, border-color .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.04); }
+.btn:active:not(:disabled) { transform: scale(.97); }
+.btn-gold { position: relative; overflow: hidden; background: linear-gradient(180deg, #FFD36B, #F2A31B); color: #4A0D19; box-shadow: 0 8px 18px -6px rgba(242,163,27,.75), inset 0 1px 0 rgba(255,255,255,.6); }
+.btn-gold::after { content: ''; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.65), transparent); transform: skewX(-18deg); animation: shine 4.2s ease-in-out infinite; }
+@keyframes shine { 0%, 60% { left: -60%; } 100% { left: 130%; } }
+
+/* ---------- Pita berjalan ---------- */
+.ribbon { overflow: hidden; margin: 30px 0 0; padding: 14px 0; background: linear-gradient(90deg, #FFF4D6, #FFE6EA, #E2F6EF, #E3F1FC, #FFF4D6); border-block: 2px dashed rgba(110,20,35,.18); transform: rotate(-.6deg); }
+.ribbon-track { display: flex; width: max-content; animation: marquee 38s linear infinite; }
+.ribbon:hover .ribbon-track { animation-play-state: paused; }
+.ribbon-set { display: flex; gap: 14px; padding-right: 14px; }
+.rb { display: inline-flex; align-items: center; gap: 8px; padding: 7px 18px; border-radius: 999px; font-weight: 750; font-size: .95rem; color: #fff; white-space: nowrap; box-shadow: 0 4px 0 rgba(0,0,0,.14); }
+.rb::before { content: '✦'; opacity: .85; }
+.rb-0 { background: var(--fun-coral); } .rb-1 { background: var(--fun-mint); } .rb-2 { background: #E9A10F; } .rb-3 { background: var(--fun-sky); } .rb-4 { background: var(--fun-berry); } .rb-5 { background: var(--fun-grape); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Judul bagian ---------- */
+.eyebrow { display: inline-block; padding: 5px 14px; border-radius: 999px; background: var(--fun-sun); color: #4A0D19; font-weight: 800; letter-spacing: .08em; transform: rotate(-2deg); box-shadow: 0 3px 0 rgba(0,0,0,.12); }
+.eyebrow::before { display: none; }
+.section-head h2 { position: relative; width: fit-content; }
+.section-head h2::after { content: ''; position: absolute; left: 0; right: 0; bottom: -9px; height: 9px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='9' viewBox='0 0 28 9'%3E%3Cpath d='M0 5 Q7 0 14 5 T28 5' fill='none' stroke='%23F26A4B' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x; background-size: 28px 9px; }
+.section-head h2 + p, .section-head p.muted { margin-top: 16px; }
+
+/* ---------- Keunggulan ---------- */
+.feature { transition: transform .3s var(--spring), box-shadow .2s; }
+.feature:hover { transform: translateY(-6px) rotate(-.8deg); box-shadow: var(--shadow-lg); }
+.feature:nth-child(1) .feature-ic { background: linear-gradient(135deg, #FF8A5C, var(--fun-coral)); }
+.feature:nth-child(2) .feature-ic { background: linear-gradient(135deg, #46D1AE, var(--fun-mint)); }
+.feature:nth-child(3) .feature-ic { background: linear-gradient(135deg, #8E78E6, var(--fun-grape)); }
+.feature-ic { color: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.12); transition: transform .4s var(--spring); }
+.feature:hover .feature-ic { transform: rotate(-10deg) scale(1.12); }
+
+/* ---------- Kartu kategori & daerah ---------- */
+.cat-card { transition: transform .3s var(--spring), box-shadow .2s; border-width: 2px; border-color: color-mix(in srgb, var(--cc) 35%, transparent); }
+.cat-card:hover { transform: translateY(-8px) rotate(-1.2deg); box-shadow: 0 22px 36px -16px color-mix(in srgb, var(--cc) 70%, transparent); }
+.cat-card:nth-child(2):hover { transform: translateY(-8px) rotate(1.2deg); }
+.cat-card:nth-child(1) { --cc: var(--fun-coral) !important; } .cat-card:nth-child(2) { --cc: var(--fun-mint) !important; } .cat-card:nth-child(3) { --cc: #E9A10F !important; }
+.cat-ic { transition: transform .4s var(--spring); }
+.cat-card:hover .cat-ic { transform: scale(1.2) rotate(-12deg); }
+.prov-card { transition: transform .3s var(--spring), box-shadow .2s; }
+.prov-card:hover { transform: translateY(-5px) scale(1.03); }
+.prov-dot { animation: dot-pulse 2.4s ease-in-out infinite; }
+@keyframes dot-pulse { 50% { transform: scale(1.5); box-shadow: 0 0 0 6px color-mix(in srgb, var(--pc) 22%, transparent); } }
+
+/* ---------- Kartu cerita ---------- */
+.story-card { --cat: var(--marun); position: relative; transition: transform .35s var(--spring), box-shadow .25s; border-radius: 22px; border: 2px solid color-mix(in srgb, var(--cat) 22%, #fff); }
+.story-card[data-cat="Legenda"] { --cat: var(--fun-coral); } .story-card[data-cat="Fabel"] { --cat: var(--fun-mint); }
+.story-card[data-cat="Dongeng"] { --cat: #E9A10F; } .story-card[data-cat="Mitos"] { --cat: var(--fun-grape); }
+.story-card:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 24px 40px -18px color-mix(in srgb, var(--cat) 75%, transparent); }
+.grid-cards > :nth-child(even).story-card:hover { transform: translateY(-8px) rotate(1deg); }
+.sc-cat { align-self: start; justify-self: start; padding: 3px 12px; border-radius: 999px; background: var(--cat); color: #fff; font-weight: 800; font-size: .7rem; letter-spacing: .06em; box-shadow: 0 3px 0 rgba(0,0,0,.14); }
+.sc-more { transition: background .15s, color .15s; }
+.story-card:hover .sc-more { background: var(--cat); }
+.rank-badge { background: linear-gradient(180deg, #FFD36B, #F2A31B) !important; color: #4A0D19 !important; font-weight: 900; border-radius: 12px !important; box-shadow: 0 4px 0 rgba(0,0,0,.2); transform: rotate(-6deg); }
+.fav-btn { transition: transform .3s var(--spring); }
+.fav-btn:hover { transform: scale(1.2); } .fav-btn.on { animation: heart-pop .5s var(--spring); }
+@keyframes heart-pop { 0% { transform: scale(.6); } 100% { transform: scale(1); } }
+
+/* ---------- Cara kerja & ajakan ---------- */
+.steps li:nth-child(1) .step-n { background: var(--fun-coral); color: #fff; } .steps li:nth-child(2) .step-n { background: var(--fun-mint); color: #fff; } .steps li:nth-child(3) .step-n { background: var(--fun-sky); color: #fff; }
+.step-n { box-shadow: 0 4px 0 rgba(0,0,0,.2); transition: transform .35s var(--spring); }
+.steps li:hover .step-n { transform: rotate(-12deg) scale(1.18); }
+.cta-band { position: relative; overflow: hidden; }
+.cta-band::before, .cta-band::after { content: ''; position: absolute; width: 26px; height: 26px; background: linear-gradient(135deg, #FFF3C4, var(--fun-sun)); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: twinkle 3s ease-in-out infinite; pointer-events: none; }
+.cta-band::before { right: 38%; top: 16px; } .cta-band::after { left: 46%; bottom: 14px; width: 16px; height: 16px; animation-delay: 1.3s; }
+
+/* ---------- Pembaca: panggung yang lebih hangat ---------- */
+.reader { background: radial-gradient(800px 520px at 50% 42%, rgba(255,193,59,.16) 0%, transparent 62%), radial-gradient(900px 600px at 50% 40%, #6A1527 0%, #2C0610 78%); }
+
+@media (max-width: 720px) {
+  .hero-fx .blob { filter: blur(34px); } .hero-fx .b1 { width: 220px; height: 220px; } .hero-fx .b2 { width: 200px; height: 200px; } .hero-fx .b3 { display: none; }
+  .ribbon { transform: none; margin-top: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-fx .blob, .hero-fx .spark, .hero .chip-light, .hero-book-stage, .btn-gold::after, .ribbon-track, .prov-dot, .cta-band::before, .cta-band::after { animation: none !important; }
+  .btn:hover:not(:disabled), .story-card:hover, .cat-card:hover, .feature:hover { transform: none; }
+}

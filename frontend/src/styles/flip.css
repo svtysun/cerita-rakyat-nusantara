@@ -1,0 +1,80 @@
+/* Halaman 400x560 yang diskalakan */
+.pv { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.pv-inner { position: absolute; left: 0; top: 0; transform-origin: top left; overflow: hidden; }
+
+/* Buku 3D */
+.fb-stage {
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .33 0 0 0 0 .22 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  position: relative; width: 100%; height: 100%; display: grid; place-items: center; perspective: 3800px; perspective-origin: 50% 42%; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; outline-offset: -4px;
+}
+.fb-stage:active { cursor: grabbing; }
+.fb-book { position: relative; transform-style: preserve-3d; transition: none; }
+.fb-leaf { position: absolute; top: 0; transform-origin: left center; transform-style: preserve-3d; will-change: transform; }
+.fb-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; background: #FBF8F1; }
+.fb-front { border-radius: 2px 8px 8px 2px; }
+.fb-back { transform: rotateY(180deg); border-radius: 8px 2px 2px 8px; }
+.is-single .fb-front { border-radius: 4px 10px 10px 4px; }
+.fb-paper { width: 100%; height: 100%; background: linear-gradient(90deg, #EFE7D6, #FBF8F1 40%); }
+
+/* serat kertas + tepi halaman yang sedikit menggelap */
+.fb-face::after { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: var(--paper-grain); background-size: 160px; opacity: .42; box-shadow: inset 0 0 26px rgba(120,84,40,.16), inset 0 0 2px rgba(120,84,40,.25); }
+
+.fb-shade { position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(20,4,8,.92), rgba(20,4,8,.12)); opacity: 0; pointer-events: none; }
+.fb-back .fb-shade { background: linear-gradient(270deg, rgba(20,4,8,.92), rgba(20,4,8,.12)); }
+.fb-gloss { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; background: linear-gradient(100deg, transparent 38%, rgba(255,255,255,.62) 50%, transparent 62%); background-size: 300% 100%; background-position: 100% 0; }
+
+/* lipatan di tengah buku (jilid) */
+.fb-spine { position: absolute; top: 0; bottom: 0; width: 13%; pointer-events: none; z-index: 1; }
+.fb-spine-l { left: 0; background: linear-gradient(90deg, rgba(35,14,8,.46) 0, rgba(60,30,20,.2) 14%, rgba(60,30,20,.07) 45%, transparent); }
+.fb-spine-r { right: 0; background: linear-gradient(270deg, rgba(35,14,8,.46) 0, rgba(60,30,20,.2) 14%, rgba(60,30,20,.07) 45%, transparent); }
+
+/* sampul keras di bawah halaman */
+.fb-board { position: absolute; top: -5px; height: calc(100% + 10px); width: 0; opacity: 0; pointer-events: none; transform: translateZ(-1px);
+  background: linear-gradient(135deg, #8F1D30 0%, #5E1020 52%, #3B0912 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 2px 0 #2A0610, 0 7px 10px rgba(0,0,0,.32), 0 30px 40px -18px rgba(0,0,0,.7); }
+.fb-board::after { content: ''; position: absolute; inset: 3px; border-radius: 3px; border: 1px solid rgba(224,169,74,.34); }
+.fb-board-r, .is-single .fb-board-r { border-radius: 3px 9px 9px 3px; }
+.fb-board-l { border-radius: 9px 3px 3px 9px; }
+
+/* tebal tumpukan halaman */
+.fb-edge { position: absolute; top: 2px; bottom: 2px; width: 0; pointer-events: none;
+  background: repeating-linear-gradient(90deg, #FFFDF7 0 1px, #D8CCB2 1px 2px); }
+.fb-edge-r { left: 100%; border-radius: 0 3px 3px 0; box-shadow: inset 2px 0 3px rgba(60,30,10,.28); }
+.fb-edge-l { right: 100%; border-radius: 3px 0 0 3px; box-shadow: inset -2px 0 3px rgba(60,30,10,.28); }
+
+/* bayangan lembar yang sedang dibalik jatuh di halaman bawahnya */
+.fb-cast { position: absolute; top: 0; height: 100%; pointer-events: none; opacity: 0; transform: translateZ(.5px); }
+.fb-cast-r { transform-origin: left center; background: linear-gradient(90deg, rgba(20,6,10,.58), rgba(20,6,10,.26) 42%, rgba(20,6,10,.07) 78%, transparent); border-radius: 0 8px 8px 0; }
+.fb-cast-l { transform-origin: right center; background: linear-gradient(270deg, rgba(20,6,10,.58), rgba(20,6,10,.26) 42%, rgba(20,6,10,.07) 78%, transparent); border-radius: 8px 0 0 8px; }
+
+/* sudut halaman terlipat: ajakan untuk membalik */
+.fb-curl { position: absolute; right: 0; bottom: 0; width: 22px; height: 22px; pointer-events: none; z-index: 999; transform: translateZ(2px); border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom right, #FFFDF6 0%, #F1E8D2 44%, #BFB08E 49.6%, #8F805F 50%, #D7CBB0 50.6%, #CFC2A4 100%);
+  filter: drop-shadow(-3px -3px 4px rgba(30,10,5,.3)); transition: width .28s cubic-bezier(.2,.8,.2,1), height .28s cubic-bezier(.2,.8,.2,1), opacity .15s; animation: curl-hint 2.8s ease-in-out 1.2s 2; }
+@media (hover: hover) { .fb-stage:hover:not(:active) .fb-curl { width: 54px; height: 54px; animation: none; } }
+.fb-book.moving .fb-curl { opacity: 0; }
+@keyframes curl-hint { 0%, 100% { width: 22px; height: 22px; } 50% { width: 38px; height: 38px; } }
+
+/* Animasi elemen halaman */
+.anim { animation-duration: var(--ad, .8s); animation-delay: var(--adl, 0s); animation-timing-function: cubic-bezier(.2,.7,.2,1); animation-fill-mode: backwards; }
+.anim-fade { animation-name: a-fade; }
+.anim-slideUp { animation-name: a-up; }
+.anim-slideDown { animation-name: a-down; }
+.anim-slideLeft { animation-name: a-left; }
+.anim-slideRight { animation-name: a-right; }
+.anim-zoom { animation-name: a-zoom; }
+.anim-bounce { animation-name: a-bounce; animation-timing-function: cubic-bezier(.3,1.5,.5,1); }
+.anim-float { animation-name: a-float; animation-iteration-count: infinite; animation-timing-function: ease-in-out; animation-fill-mode: none; }
+.anim-pulse { animation-name: a-pulse; animation-iteration-count: infinite; animation-timing-function: ease-in-out; animation-fill-mode: none; }
+.anim-sway { animation-name: a-sway; animation-iteration-count: infinite; animation-timing-function: ease-in-out; animation-fill-mode: none; transform-origin: 50% 100%; }
+@keyframes a-fade { from { opacity: 0; } }
+@keyframes a-up { from { opacity: 0; transform: translateY(40px); } }
+@keyframes a-down { from { opacity: 0; transform: translateY(-40px); } }
+@keyframes a-left { from { opacity: 0; transform: translateX(60px); } }
+@keyframes a-right { from { opacity: 0; transform: translateX(-60px); } }
+@keyframes a-zoom { from { opacity: 0; transform: scale(.6); } }
+@keyframes a-bounce { 0% { opacity: 0; transform: translateY(-50px) scale(.9); } 100% { opacity: 1; transform: none; } }
+@keyframes a-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes a-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@keyframes a-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+@media (prefers-reduced-motion: reduce) { .anim, .fb-curl { animation: none !important; } }

@@ -1,0 +1,5 @@
+# Berkas internal tidak boleh diakses langsung dari browser.
+<FilesMatch "^(config|config\.local|lib|handlers|mailer)\.php$">
+  Require all denied
+</FilesMatch>
+Options -Indexes
